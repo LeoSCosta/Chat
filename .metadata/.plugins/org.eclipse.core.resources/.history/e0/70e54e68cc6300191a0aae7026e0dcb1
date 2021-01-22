@@ -1,0 +1,23 @@
+package Conexao;
+
+import java.io.IOException;
+import java.net.Socket;
+
+public class Principal {
+	public static void main(String[] args) {
+		
+		try {
+			Servidor servidor = new Servidor();
+			System.out.println("Aguardando conexao");
+			servidor.criarServidor(5555);
+			Socket socket = servidor.esperarConexao();
+			servidor.tConexao(socket);
+			System.out.println("Cliente finalizado");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+}

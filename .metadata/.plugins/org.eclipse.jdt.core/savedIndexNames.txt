@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\Leo\Documents\Ciências da Computação\Worksapce JAVA\CHAT\.metadata\.plugins\org.eclipse.jdt.core
+974731857.index
+113558702.index
+3244704807.index

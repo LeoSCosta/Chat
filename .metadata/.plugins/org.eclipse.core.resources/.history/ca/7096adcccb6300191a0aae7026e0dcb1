@@ -1,0 +1,43 @@
+package Conexao;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Servidor {
+	private ServerSocket servidor;
+	
+	private void criarServidor(int porta) throws IOException {
+		servidor = new ServerSocket(porta);
+	}
+	
+	private Socket esperarConexao() throws IOException {
+		Socket socket = servidor.accept();
+		return socket;		
+	}
+	
+	private void tConexao (Socket socket) throws IOException {
+		try {
+			ObjectOutputStream saida = new ObjectOutputStream(socket.getOutputStream());
+			ObjectInputStream entrada = new ObjectInputStream(socket.getInputStream());
+			
+			String msg = entrada.readUTF();
+			System.out.println("Mensagem recebida...");
+			saida.writeUTF("Hello World");
+			
+			entrada.close();
+			saida.close();
+			
+		}catch(IOException e) {
+			
+		}finally {
+			fecharSocket(socket);
+		}
+	}
+	
+	private void fecharSocket(Socket socket) throws IOException {
+		socket.close();
+	}
+}

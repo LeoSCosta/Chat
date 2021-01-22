@@ -1,0 +1,56 @@
+package Cliente;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class Cliente {
+	public static void main(String []args) {
+		
+		String IP = "localhost";
+		int porta = 9999;
+		
+		try {
+			final Socket cliente = new Socket ( IP , porta);
+			new Thread() {
+				
+				@Override
+				public void run() {
+					
+					try {
+						BufferedReader entrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+						
+						while(true) {
+							String m = entrada.readLine();
+							System.out.println("O servidor disse: " + m);
+							
+						}
+						
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			}.start();
+			
+			PrintWriter saida = new PrintWriter(cliente.getOutputStream(),true);
+			BufferedReader entradaS = new BufferedReader(new InputStreamReader(System.in));
+
+			while(true) {
+				String mt = entradaS.readLine();
+				saida.println(mt);
+			}
+			
+		} catch (UnknownHostException e) {
+			System.err.println("Endereço invalido");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Sem conexao com o servidor...");
+			e.printStackTrace();
+		}
+	}
+}
